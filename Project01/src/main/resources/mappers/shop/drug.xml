@@ -29,7 +29,7 @@
 		resultType="com.example.project01.model.shop.DrugDTO">
 		select * from drug 
 		order by drug_code
-		LIMIT #{start}, 10
+		LIMIT 0, 10
 	</select>
 
 	<select id="search_list"
@@ -37,7 +37,7 @@
 		select drug_code, indication, drug_name, dose, price from drug
 		<include refid="search" />
 		order by drug_code
-		LIMIT #{start}, 10
+		LIMIT 0, 10
 	</select>
 
 	<select id="detail"

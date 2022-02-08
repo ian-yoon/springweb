@@ -5,6 +5,7 @@ import java.util.List;
 import com.example.project01.model.shop.DrugDTO;
 
 public interface BoardService {
+	
 	List<DrugDTO> search_list(int start, int end, String search_option, String keyword);
 
 	DrugDTO detail(int drug_code);
