@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="drug">
+
+	<insert id="insert">
+		insert into drug (drug_name, indication, dose, price,
+		side_effect, allergy,
+		pregnancy)
+		values (#{drug_name}, #{indication},
+		#{dose}, #{price}, #{side_effect},
+		#{allergy}, #{pregnancy})
+	</insert>
+
+	<update id="update">
+		update drug
+		set drug_name=#{drug_name},
+		indication=#{indication}, dose=#{dose},
+		price=#{price},
+		side_effect=#{side_effect}, allergy=#{allergy},
+		pregnancy=#{pregnancy}
+		where drug_code=#{drug_code}
+	</update>
+
+	<delete id="delete">
+		delete from drug where drug_code=#{drug_code}
+	</delete>
+
+	<select id="list"
+		resultType="com.example.project01.model.shop.DrugDTO">
+		select * from drug 
+		order by drug_code
+		LIMIT #{start}, 10
+	</select>
+
+	<select id="search_list"
+		resultType="com.example.project01.model.shop.DrugDTO">
+		select drug_code, indication, drug_name, dose, price from drug
+		<include refid="search" />
+		order by drug_code
+		LIMIT #{start}, 10
+	</select>
+
+	<select id="detail"
+		resultType="com.example.project01.model.shop.DrugDTO">
+		select * from drug
+		where drug_code=#{drug_code}
+	</select>
+
+	<sql id="search">
+		<choose>
+			<when test="search_option == 'name'">
+				where drug_name like concat('%',#{keyword},'%')
+			</when>
+			<otherwise>
+				where indication like concat('%',#{keyword},'%')
+			</otherwise>
+		</choose>
+	</sql>
+
+	<sql id="paging_header">
+		select *
+		from (
+		select rownum as rn, A.*
+		from (
+	</sql>
+	<sql id="paging_footer">
+		) A
+		) where rn between #{start} and #{end}
+	</sql>
+
+	<select id="count" resultType="int">
+		select count(*) from drug
+		<include refid="search" />
+	</select>
+
+</mapper>
