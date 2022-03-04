@@ -20,7 +20,7 @@ public class DrugDAOImpl implements DrugDAO {
 		Map<String, Object> map = new HashMap<>();
 		map.put("search_option", search_option);
 		map.put("keyword", keyword);
-		map.put("start", start+1);
+		map.put("start", start);
 		map.put("end", end);
 		return sqlSession.selectList("drug.search_list", map);
 	}
