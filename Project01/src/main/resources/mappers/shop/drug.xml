@@ -27,17 +27,19 @@
 
 	<select id="list"
 		resultType="com.example.project01.model.shop.DrugDTO">
+		<include refid="paging_header" />
 		select * from drug 
 		order by drug_code
-		LIMIT 0, 10
+		<include refid="paging_footer" />
 	</select>
 
 	<select id="search_list"
 		resultType="com.example.project01.model.shop.DrugDTO">
+		<include refid="paging_header" />
 		select drug_code, indication, drug_name, dose, price from drug
 		<include refid="search" />
 		order by drug_code
-		LIMIT 0, 10
+		<include refid="paging_footer" />
 	</select>
 
 	<select id="detail"
@@ -49,10 +51,10 @@
 	<sql id="search">
 		<choose>
 			<when test="search_option == 'name'">
-				where drug_name like concat('%',#{keyword},'%')
+				where ${search_option} like '%' || #{keyword} || '%'
 			</when>
 			<otherwise>
-				where indication like concat('%',#{keyword},'%')
+				where indication like '%' || #{keyword} || '%'
 			</otherwise>
 		</choose>
 	</sql>
