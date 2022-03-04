@@ -93,17 +93,25 @@ tbody tr:nth-child(even) {
 				<td colspan="5" align="center"><c:if
 						test="${page_info.curBlock > 1}">
 						<a href="javascript:list('1')">FRONT</a>
-					</c:if> <c:forEach var="num" begin="${page_info.blockBegin}"
+					</c:if>
+					<c:if test="${page_info.curBlock > 1}">
+						<a href="javascript:list('${map.page_info.prevPage}')">PREV</a>
+					</c:if>
+					<c:forEach var="num" begin="${page_info.blockBegin}"
 						end="${page_info.blockEnd}">
 						<c:choose>
 							<c:when test="${num == page_info.curPage}">
 								<span style="color: teal">${num}</span>&nbsp;
 						</c:when>
 							<c:otherwise>
-								<a href=javascript:list( '${num}')>${num}</a>&nbsp;
+								<a href=javascript:list('${num}')>${num}</a>&nbsp;
 						</c:otherwise>
 						</c:choose>
-					</c:forEach> <c:if test="${page_info.curBlock <= page_info.totBlock}">
+					</c:forEach> 
+					<c:if test="{page_info.curBlock <= page_info.totBlock}">
+						<a href="javascript:list('${page_info.nextPage}')">NEXT</a>
+					</c:if>
+					<c:if test="${page_info.curPage <= page_info.totPage}">
 						<a href="javascript:list('${page_info.totPage}')">END</a>
 					</c:if></td>
 			</tr>
